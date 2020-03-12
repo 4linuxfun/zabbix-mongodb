@@ -2,6 +2,12 @@
 A Zabbix plugin for monitoring MongoDB.
 
 # Installation
+Create monitor user：
+```
+> use admin
+switched to db admin
+> db.createUser({user:"username",pwd:"password",roles:[{role:"clusterMonitor",db:"admin"}]})
+```
 1. Import the mongodb template to zabbix and link it to the zabbix mongodb host.
 2. Copy the scripts to mongodb host in /usr/local/bin .
 3. Copy mongodb zabbix agent configuration to /etc/zabbix-agent/zabbix_agentd.d and restart zabbix agent.
