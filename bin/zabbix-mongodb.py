@@ -34,19 +34,14 @@ class MongoDB(object):
         if self.__conn is None:
             if self.mongo_user is None:
                 try:
-                    self.__conn = MongoClient('mongodb://%s:%s' %
-                                              (self.mongo_host,
-                                               self.mongo_port))
+                    self.__conn = MongoClient(host=self.mongo_host, port=self.mongo_port)
                 except errors.PyMongoError as py_mongo_error:
                     print('Error in MongoDB connection: %s' %
                           str(py_mongo_error))
             else:
                 try:
-                    self.__conn = MongoClient('mongodb://%s:%s@%s:%s' %
-                                              (self.mongo_user,
-                                               self.mongo_password,
-                                               self.mongo_host,
-                                               self.mongo_port))
+                    self.__conn = MongoClient(host=self.mongo_host, port=self.mongo_port, username=self.mongo_user,
+                                              password=self.mongo_password)
                 except errors.PyMongoError as py_mongo_error:
                     print('Error in MongoDB connection: %s' %
                           str(py_mongo_error))
@@ -77,7 +72,7 @@ class MongoDB(object):
         dict_metrics['key'] = 'mongodb.ismaster'
         if master:
             dict_metrics['value'] = 1
-            db_names = self.__conn.database_names()
+            db_names = self.__conn.list_database_names()
             self.__dbnames = db_names
         else:
             dict_metrics['value'] = 0
